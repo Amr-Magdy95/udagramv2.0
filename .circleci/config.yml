@@ -9,12 +9,41 @@ jobs:
   build:
     docker:
       # the base image can run most needed actions with orbs
-      - image: "cimg/node:14.15"
+      - image: "cimg/node:16.15"
     steps:
       # install node and checkout code
       - node/install:
-          node-version: '14.15'         
+          node-version: '16.15' 
+      - eb/setup 
+      - aws-cli/setup:
+          profile-name: example             
       - checkout
+      # Performing a clean up
+      - run: 
+          name: removing package-lock.json
+          command: |
+            rm ./package-lock.json
+            ls 
+            cd udagram
+            cd udagram-frontend && rm -f ./package-lock.json
+            cd ../udagram-api && rm -f ./package-lock.json
+      - run: 
+          name: Cache Clean
+          command: | 
+            npm cache clean --force
+            cd udagram
+            cd udagram-frontend && npm cache clean --force
+            cd ../udagram-api && npm cache clean --force
+      - run:
+          name: removing node_modules
+          command: |
+            rm -fr node_modules
+            echo "$PWD"
+            cd udagram
+            ls
+            cd udagram-frontend && rm -fr node_modules
+            cd ../udagram-api && rm -fr node_modules
+
       # Use root level package.json to install dependencies in the frontend app
       - run:
           name: Install Front-End Dependencies
@@ -24,7 +53,12 @@ jobs:
             echo "NPM --version" 
             echo $(npm --version)
             npm run frontend:install
-      # TODO: Install dependencies in the the backend API          
+      # TODO: Install dependencies in the the backend API   
+      - run:
+          name: Install Back-End Dependencies
+          command: |
+            npm run backend:install
+
       - run:
           name: Install API Dependencies
           command: |
@@ -34,16 +68,20 @@ jobs:
           name: Front-End Lint
           command: |
             echo "TODO: Lint the frontend"
+            npm run frontend:lint
       # TODO: Build the frontend app
       - run:
           name: Front-End Build
           command: |
             echo "TODO: Build the frontend app"
+            npm run frontend:build
       # TODO: Build the backend API      
       - run:
           name: API Build
           command: |
             echo "TODO: Build the backend API"
+            echo "hello"
+            npm run api:build
   # deploy step will run only after manual approval
   deploy:
     docker:
@@ -51,7 +89,7 @@ jobs:
       # more setup needed for aws, node, elastic beanstalk
     steps:
       - node/install:
-          node-version: '14.15' 
+          node-version: '16.15' 
       - eb/setup
       - aws-cli/setup
       - checkout
@@ -60,6 +98,7 @@ jobs:
           # TODO: Install, build, deploy in both apps
           command: |
             echo "# TODO: Install, build, deploy in both apps"
+            npm run deploy
             
 workflows:
   udagram:
