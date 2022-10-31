@@ -3,7 +3,9 @@
 This is a brief description of the Pipeline of the project.
 
 ## Pipeline Diagram
-(./images/PipelineDiagram.jpg)
+
+![alt text](./images/PipelineDiagram.jpg)
+
 
 ## Steps of the Pipeline
 - Build Step
