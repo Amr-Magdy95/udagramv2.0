@@ -2,8 +2,10 @@
 
 
 # Udagram Links
-- `http://udagramappbucket473822264180.s3-website-us-west-2.amazonaws.com/home`
-- `http://udagram-api-dev.eba-mxmid5ui.us-west-2.elasticbeanstalk.com/`
+- Front-end link
+` - http://udagramappbucket473822264180.s3-website-us-west-2.amazonaws.com`
+- Backend Link 
+  - `http://udagram-api-dev.eba-mxmid5ui.us-west-2.elasticbeanstalk.com/`
 
 # Udagram AWS Images
 ![alt text](./documentation/images/1.png)
