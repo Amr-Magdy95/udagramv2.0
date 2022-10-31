@@ -3,7 +3,7 @@
 This is a brief description of the high-level over of the project.
 
 ## Infrastructure Diagram
-(./images/HighLevelDiagram.jpg)
+![alt text](./images/HighLevelDiagram.jpg)
 
 ## Infrastructure macro-description
 - RDS
